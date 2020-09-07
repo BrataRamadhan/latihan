@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('welcome');
     }
+
+    // public function tampil(){
+    //     $siswa = DB::table('student')->get();
+    //     // $siswa = Siswa::with('user')->get();
+    //     // dd($siswa);
+    //     return view('survey', compact('siswa'));
+    // }
 }

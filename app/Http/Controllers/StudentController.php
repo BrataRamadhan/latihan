@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class StudentController extends Controller
 {
@@ -15,6 +17,11 @@ class StudentController extends Controller
     public function index()
     {
         //
+        $siswa = DB::table('students')->get();
+        // $siswa = Siswa::with('user')->get();
+        // dd($siswa);
+        return view('survey', compact('siswa'));
+
     }
 
     /**
@@ -25,6 +32,7 @@ class StudentController extends Controller
     public function create()
     {
         //
+        return view('tambahsurvey');
     }
 
     /**
@@ -36,6 +44,31 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         //
+        $tanggal = Carbon::now();
+        $request->validate([
+            'name' => 'required|max:20',
+            'email' => 'required|max:255',
+            'number' => 'required|max:20',
+            'jurusan' => 'required',
+            'gender' => 'required',
+            'hoby' => 'required|min:2',
+            'alamat' => 'required'
+        ]);
+
+
+        DB::table('students')->insert([
+            'name' => $request->name,
+            'email' => $request->email,
+            'number' => $request->number,
+            'jurusan' => $request->jurusan,
+            'gender' => $request->gender,
+            'hoby' => $request->hoby,
+            'alamat' => $request->alamat,
+            'tanggal' => $tanggal,
+            'id_data' => $request->id_data
+
+        ]);
+        return redirect('survey');
     }
 
     /**
